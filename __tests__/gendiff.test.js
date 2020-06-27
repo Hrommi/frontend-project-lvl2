@@ -2,7 +2,7 @@ import { test, expect, beforeAll } from '@jest/globals';
 import path from 'path';
 import genDiff from '../src/index.js';
 
-const extensions = ['json', 'yaml'];
+const extensions = ['json', 'yaml', 'ini'];
 const getFixturePath = (name) => path.join(process.cwd(), '__fixtures__', name);
 
 let expected;
