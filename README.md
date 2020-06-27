@@ -11,3 +11,5 @@ gendiff [options] <filepath1> <filepath2>
 ```
 ### JSON
 [![asciicast](https://asciinema.org/a/NWTrvpVrVqIrfFPFf5nlIseul.svg)](https://asciinema.org/a/NWTrvpVrVqIrfFPFf5nlIseul)
+### YAML
+[![asciicast](https://asciinema.org/a/RtJP6B1VTzKVeEDqmUSZXNwsB.svg)](https://asciinema.org/a/RtJP6B1VTzKVeEDqmUSZXNwsB)
