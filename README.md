@@ -13,3 +13,5 @@ gendiff [options] <filepath1> <filepath2>
 [![asciicast](https://asciinema.org/a/NWTrvpVrVqIrfFPFf5nlIseul.svg)](https://asciinema.org/a/NWTrvpVrVqIrfFPFf5nlIseul)
 ### YAML
 [![asciicast](https://asciinema.org/a/RtJP6B1VTzKVeEDqmUSZXNwsB.svg)](https://asciinema.org/a/RtJP6B1VTzKVeEDqmUSZXNwsB)
+### INI
+[![asciicast](https://asciinema.org/a/6EcsG1L3gIRE4EfnwtT1t2jBc.svg)](https://asciinema.org/a/6EcsG1L3gIRE4EfnwtT1t2jBc)
