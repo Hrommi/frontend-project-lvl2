@@ -4,7 +4,7 @@ import parse from './parsers.js';
 
 const readFile = (filepath) => {
   const fullPath = path.resolve(process.cwd(), filepath);
-  return fs.readFileSync(fullPath);
+  return fs.readFileSync(fullPath, 'utf-8');
 };
 
 const isUnchanged = (value1, value2) => value1 === value2;
