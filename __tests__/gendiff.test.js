@@ -25,3 +25,18 @@ describe('Stylish format', () => {
     expect(diff).toBe(expected.trim());
   });
 });
+
+describe('Plain format', () => {
+  let expected;
+
+  beforeAll(() => {
+    expected = fs.readFileSync(getFixturePath('plainResult.txt'), 'utf-8');
+  });
+
+  test.each(extensions)('gendiff %s', (extension) => {
+    const filepathBefore = getFixturePath(`before.${extension}`);
+    const filepathAfter = getFixturePath(`after.${extension}`);
+    const diff = genDiff(filepathBefore, filepathAfter, 'plain');
+    expect(diff).toBe(expected.trim());
+  });
+});
