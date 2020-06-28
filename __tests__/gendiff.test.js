@@ -8,50 +8,21 @@ import path from 'path';
 import fs from 'fs';
 import genDiff from '../src/index.js';
 
+const formats = ['stylish', 'plain', 'json'];
 const extensions = ['json', 'yaml', 'ini'];
 const getFixturePath = (name) => path.join(process.cwd(), '__fixtures__', name);
 
-describe('Stylish format', () => {
+describe.each(formats)('%s format', (format) => {
   let expected;
 
   beforeAll(() => {
-    expected = fs.readFileSync(getFixturePath('stylishResult.txt'), 'utf-8');
+    expected = fs.readFileSync(getFixturePath(`${format}Result.txt`), 'utf-8');
   });
 
   test.each(extensions)('gendiff %s', (extension) => {
     const filepathBefore = getFixturePath(`before.${extension}`);
     const filepathAfter = getFixturePath(`after.${extension}`);
-    const diff = genDiff(filepathBefore, filepathAfter, 'stylish');
-    expect(diff).toBe(expected.trim());
-  });
-});
-
-describe('Plain format', () => {
-  let expected;
-
-  beforeAll(() => {
-    expected = fs.readFileSync(getFixturePath('plainResult.txt'), 'utf-8');
-  });
-
-  test.each(extensions)('gendiff %s', (extension) => {
-    const filepathBefore = getFixturePath(`before.${extension}`);
-    const filepathAfter = getFixturePath(`after.${extension}`);
-    const diff = genDiff(filepathBefore, filepathAfter, 'plain');
-    expect(diff).toBe(expected.trim());
-  });
-});
-
-describe('JSON format', () => {
-  let expected;
-
-  beforeAll(() => {
-    expected = fs.readFileSync(getFixturePath('jsonResult.txt'), 'utf-8');
-  });
-
-  test.each(extensions)('gendiff %s', (extension) => {
-    const filepathBefore = getFixturePath(`before.${extension}`);
-    const filepathAfter = getFixturePath(`after.${extension}`);
-    const diff = genDiff(filepathBefore, filepathAfter, 'json');
+    const diff = genDiff(filepathBefore, filepathAfter, format);
     expect(diff).toBe(expected.trim());
   });
 });
