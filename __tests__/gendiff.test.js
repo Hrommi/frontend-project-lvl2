@@ -40,3 +40,18 @@ describe('Plain format', () => {
     expect(diff).toBe(expected.trim());
   });
 });
+
+describe('JSON format', () => {
+  let expected;
+
+  beforeAll(() => {
+    expected = fs.readFileSync(getFixturePath('jsonResult.txt'), 'utf-8');
+  });
+
+  test.each(extensions)('gendiff %s', (extension) => {
+    const filepathBefore = getFixturePath(`before.${extension}`);
+    const filepathAfter = getFixturePath(`after.${extension}`);
+    const diff = genDiff(filepathBefore, filepathAfter, 'json');
+    expect(diff).toBe(expected.trim());
+  });
+});
