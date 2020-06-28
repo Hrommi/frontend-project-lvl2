@@ -1,17 +1,61 @@
 import fs from 'fs';
 import path from 'path';
 import parse from './parsers.js';
+import render from './formatters/index.js';
+import isObject from './utils/isObject.js';
+
+const isNested = (value1, value2) => isObject(value1) && isObject(value2);
+const isUnchanged = (value1, value2) => value1 === value2;
+const isAdded = (obj, key) => !Object.prototype.hasOwnProperty.call(obj, key);
+const isDeleted = (obj, key) => !Object.prototype.hasOwnProperty.call(obj, key);
+
+const genDiff = (before, after) => {
+  const keys = [...new Set([...Object.keys(before), ...Object.keys(after)])];
+  return keys.map((key) => {
+    const valueBefore = before[key];
+    const valueAfter = after[key];
+    if (isNested(valueBefore, valueAfter)) {
+      const children = genDiff(valueBefore, valueAfter);
+      return {
+        name: key,
+        type: 'nested',
+        children,
+      };
+    }
+    if (isUnchanged(valueBefore, valueAfter)) {
+      return {
+        name: key,
+        type: 'unchanged',
+        value: valueBefore,
+      };
+    }
+    if (isAdded(before, key)) {
+      return {
+        name: key,
+        type: 'added',
+        value: valueAfter,
+      };
+    }
+    if (isDeleted(after, key)) {
+      return {
+        name: key,
+        type: 'deleted',
+        value: valueBefore,
+      };
+    }
+    return {
+      name: key,
+      type: 'changed',
+      valueBefore,
+      value: valueAfter,
+    };
+  });
+};
 
 const readFile = (filepath) => {
   const fullPath = path.resolve(process.cwd(), filepath);
   return fs.readFileSync(fullPath, 'utf-8');
 };
-
-const isUnchanged = (value1, value2) => value1 === value2;
-
-const isAdded = (obj, key) => !Object.prototype.hasOwnProperty.call(obj, key);
-
-const isDeleted = (obj, key) => !Object.prototype.hasOwnProperty.call(obj, key);
 
 export default (filepath1, filepath2) => {
   const data1 = readFile(filepath1);
@@ -23,23 +67,7 @@ export default (filepath1, filepath2) => {
   const parsedData1 = parse(data1, fileExtension1);
   const parsedData2 = parse(data2, fileExtension2);
 
-  const data1Keys = Object.keys(parsedData1);
-  const data2Keys = Object.keys(parsedData2);
-  const keys = [...new Set([...data1Keys, ...data2Keys])];
-  const result = keys.map((key) => {
-    const value1 = parsedData1[key];
-    const value2 = parsedData2[key];
-    if (isUnchanged(value1, value2)) {
-      return `    ${key}: ${value1}`;
-    }
-    if (isAdded(parsedData1, key)) {
-      return `  + ${key}: ${value2}`;
-    }
-    if (isDeleted(parsedData2, key)) {
-      return `  - ${key}: ${value1}`;
-    }
-    return `  + ${key}: ${value2}\n  - ${key}: ${value1}`;
-  });
+  const diff = genDiff(parsedData1, parsedData2);
 
-  return `{\n${result.join('\n')}\n}`;
+  return render(diff);
 };
