@@ -19,3 +19,5 @@ gendiff [options] <filepath1> <filepath2>
 [![asciicast](https://asciinema.org/a/jxoKQxVoFV6bAuFXmJJg7y5bW.svg)](https://asciinema.org/a/jxoKQxVoFV6bAuFXmJJg7y5bW)
 ### Plain format
 [![asciicast](https://asciinema.org/a/NT7hpXaDlXHB1dLpirrLvF0Al.svg)](https://asciinema.org/a/NT7hpXaDlXHB1dLpirrLvF0Al)
+### JSON format
+[![asciicast](https://asciinema.org/a/XMVv9Dvz3Nj50L72GU988TG6s.svg)](https://asciinema.org/a/XMVv9Dvz3Nj50L72GU988TG6s)
