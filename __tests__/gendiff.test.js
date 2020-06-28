@@ -15,6 +15,6 @@ beforeAll(() => {
 test.each(extensions)('gendiff %s', (extension) => {
   const filepathBefore = getFixturePath(`before.${extension}`);
   const filepathAfter = getFixturePath(`after.${extension}`);
-  const diff = genDiff(filepathBefore, filepathAfter);
+  const diff = genDiff(filepathBefore, filepathAfter, 'stylish');
   expect(diff).toBe(expected.trim());
 });

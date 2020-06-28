@@ -1,3 +1,9 @@
 import stylishRender from './stylish.js';
 
-export default stylishRender;
+const formatsMapping = {
+  stylish: stylishRender,
+};
+
+const render = (data, format) => formatsMapping[format](data);
+
+export default render;

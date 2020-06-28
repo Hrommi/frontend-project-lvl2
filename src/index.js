@@ -57,7 +57,7 @@ const readFile = (filepath) => {
   return fs.readFileSync(fullPath, 'utf-8');
 };
 
-export default (filepath1, filepath2) => {
+export default (filepath1, filepath2, format) => {
   const data1 = readFile(filepath1);
   const data2 = readFile(filepath2);
 
@@ -69,5 +69,5 @@ export default (filepath1, filepath2) => {
 
   const diff = genDiff(parsedData1, parsedData2);
 
-  return render(diff);
+  return render(diff, format);
 };
