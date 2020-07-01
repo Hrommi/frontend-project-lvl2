@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import isObject from 'lodash/isPlainObject';
 import has from 'lodash/has';
+import keys from 'lodash/keys';
+import union from 'lodash/union';
 import parse from './parsers.js';
 import render from './formatters/index.js';
 
@@ -10,9 +12,11 @@ const isUnchanged = (value1, value2) => value1 === value2;
 const isAdded = (obj, key) => !has(obj, key);
 const isDeleted = (obj, key) => !has(obj, key);
 
+const getUnionKeys = (obj1, obj2) => union(keys(obj1), keys(obj2));
+
 const genDiff = (before, after) => {
-  const keys = [...new Set([...Object.keys(before), ...Object.keys(after)])];
-  return keys.map((key) => {
+  const unionKeys = getUnionKeys(before, after);
+  return unionKeys.map((key) => {
     const valueBefore = before[key];
     const valueAfter = after[key];
     if (isNested(valueBefore, valueAfter)) {
