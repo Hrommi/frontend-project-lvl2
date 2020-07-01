@@ -8,6 +8,8 @@ const stringify = (value) => {
 };
 
 const typesMapping = {
+  nested: () => '',
+  unchanged: () => '',
   added: (item) => {
     const value = stringify(item.value);
     return `Property '${item.name}' was added with value: ${value}`;
@@ -44,10 +46,11 @@ const flattenData = (data) => {
 const render = (data) => {
   const flattenedData = flattenData(data);
   return flattenedData
-    .filter(({ type }) => type !== 'unchanged' && type !== 'nested')
     .map(({ type, ...item }) => (
       typesMapping[type](item)
-    )).join('\n');
+    ))
+    .filter(Boolean)
+    .join('\n');
 };
 
 export default render;
