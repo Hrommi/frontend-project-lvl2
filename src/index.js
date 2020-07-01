@@ -1,13 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import isObject from 'lodash/isPlainObject';
+import has from 'lodash/has';
 import parse from './parsers.js';
 import render from './formatters/index.js';
 
 const isNested = (value1, value2) => isObject(value1) && isObject(value2);
 const isUnchanged = (value1, value2) => value1 === value2;
-const isAdded = (obj, key) => !Object.prototype.hasOwnProperty.call(obj, key);
-const isDeleted = (obj, key) => !Object.prototype.hasOwnProperty.call(obj, key);
+const isAdded = (obj, key) => !has(obj, key);
+const isDeleted = (obj, key) => !has(obj, key);
 
 const genDiff = (before, after) => {
   const keys = [...new Set([...Object.keys(before), ...Object.keys(after)])];
