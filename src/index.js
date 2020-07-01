@@ -19,18 +19,18 @@ const genDiff = (before, after) => {
   return unionKeys.map((key) => {
     const valueBefore = before[key];
     const valueAfter = after[key];
-    if (isNested(valueBefore, valueAfter)) {
-      const children = genDiff(valueBefore, valueAfter);
-      return { name: key, type: 'nested', children };
-    }
-    if (isUnchanged(valueBefore, valueAfter)) {
-      return { name: key, type: 'unchanged', value: valueBefore };
-    }
     if (isAdded(before, key)) {
       return { name: key, type: 'added', value: valueAfter };
     }
     if (isDeleted(after, key)) {
       return { name: key, type: 'deleted', value: valueBefore };
+    }
+    if (isUnchanged(valueBefore, valueAfter)) {
+      return { name: key, type: 'unchanged', value: valueBefore };
+    }
+    if (isNested(valueBefore, valueAfter)) {
+      const children = genDiff(valueBefore, valueAfter);
+      return { name: key, type: 'nested', children };
     }
     return {
       name: key,
