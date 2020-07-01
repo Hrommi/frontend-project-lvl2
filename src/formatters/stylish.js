@@ -1,4 +1,4 @@
-import isObject from '../utils/isObject.js';
+import isObject from 'lodash/isPlainObject';
 
 const genIndent = (level, char) => {
   const indent = '    '.repeat(level);

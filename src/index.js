@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
+import isObject from 'lodash/isPlainObject';
 import parse from './parsers.js';
 import render from './formatters/index.js';
-import isObject from './utils/isObject.js';
 
 const isNested = (value1, value2) => isObject(value1) && isObject(value2);
 const isUnchanged = (value1, value2) => value1 === value2;
