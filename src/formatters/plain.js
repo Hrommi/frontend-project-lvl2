@@ -7,50 +7,42 @@ const stringify = (value) => {
   return '[complex value]';
 };
 
+const genName = (name, parentName) => (
+  parentName
+    ? `${parentName}.${name}`
+    : name
+);
+
 const typesMapping = {
-  nested: () => '',
-  unchanged: () => '',
-  added: (item) => {
-    const value = stringify(item.value);
-    return `Property '${item.name}' was added with value: ${value}`;
+  nested: (item, parentName, render) => {
+    const name = genName(item.name, parentName);
+    return render(item.children, name, render);
   },
-  deleted: (item) => `Property '${item.name}' was deleted`,
-  changed: (item) => {
+  unchanged: () => '',
+  added: (item, parentName) => {
+    const name = genName(item.name, parentName);
+    const value = stringify(item.value);
+    return `Property '${name}' was added with value: ${value}`;
+  },
+  deleted: (item, parentName) => {
+    const name = genName(item.name, parentName);
+    return `Property '${name}' was deleted`;
+  },
+  changed: (item, parentName) => {
+    const name = genName(item.name, parentName);
     const valueAfter = stringify(item.valueAfter);
     const valueBefore = stringify(item.valueBefore);
-    return `Property '${item.name}' was changed from ${valueBefore} to ${valueAfter}`;
+    return `Property '${name}' was changed from ${valueBefore} to ${valueAfter}`;
   },
 };
 
-const flattenData = (data) => {
-  const iter = (item, parentName) => {
-    const name = parentName
-      ? `${parentName}.${item.name}`
-      : item.name;
-    const currentItem = {
-      ...item,
-      name,
-    };
-    const currentChildren = item.type === 'nested'
-      ? item.children.flatMap((child) => iter(child, name))
-      : [];
-
-    return [
-      currentItem,
-      ...currentChildren,
-    ];
-  };
-  return data.flatMap((item) => iter(item, ''));
-};
-
-const render = (data) => {
-  const flattenedData = flattenData(data);
-  return flattenedData
+const render = (data, parentName) => (
+  data
     .map(({ type, ...item }) => (
-      typesMapping[type](item)
+      typesMapping[type](item, parentName, render)
     ))
     .filter(Boolean)
-    .join('\n');
-};
+    .join('\n')
+);
 
-export default render;
+export default (data) => render(data, '');
