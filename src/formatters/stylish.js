@@ -47,9 +47,11 @@ const typesMapping = {
 };
 
 const render = (data, level) => (
-  data.map(({ type, ...item }) => (
-    typesMapping[type](item, level, render)
-  )).join('\n')
+  data
+    .map(({ type, ...item }) => (
+      typesMapping[type](item, level, render)
+    ))
+    .join('\n')
 );
 
 export default (data) => `{\n${render(data, 1)}\n}`;
