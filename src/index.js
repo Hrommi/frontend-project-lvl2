@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import isObject from 'lodash/isPlainObject';
-import has from 'lodash/has';
-import keys from 'lodash/keys';
-import union from 'lodash/union';
+import isObject from 'lodash/isPlainObject.js';
+import has from 'lodash/has.js';
+import keys from 'lodash/keys.js';
+import union from 'lodash/union.js';
 import parse from './parsers.js';
 import render from './formatters/index.js';
 

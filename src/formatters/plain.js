@@ -1,4 +1,4 @@
-import isObject from 'lodash/isPlainObject';
+import isObject from 'lodash/isPlainObject.js';
 
 const stringify = (value) => {
   if (!isObject(value)) {
