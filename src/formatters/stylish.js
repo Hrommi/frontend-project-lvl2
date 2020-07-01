@@ -39,8 +39,10 @@ const typesMapping = {
     return `${indent}${item.name}: ${value}`;
   },
   changed: (item, level) => {
-    const { valueBefore, ...rest } = item;
-    return `${typesMapping.deleted({ ...rest, value: valueBefore }, level)}\n${typesMapping.added(rest, level)}`;
+    const { valueBefore, valueAfter, ...rest } = item;
+    const deletedItem = typesMapping.deleted({ ...rest, value: valueBefore }, level);
+    const addedItem = typesMapping.added({ ...rest, value: valueAfter }, level);
+    return `${deletedItem}\n${addedItem}`;
   },
 };
 

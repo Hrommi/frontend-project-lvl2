@@ -16,9 +16,9 @@ const typesMapping = {
   },
   deleted: (item) => `Property '${item.name}' was deleted`,
   changed: (item) => {
-    const value = stringify(item.value);
+    const valueAfter = stringify(item.valueAfter);
     const valueBefore = stringify(item.valueBefore);
-    return `Property '${item.name}' was changed from ${valueBefore} to ${value}`;
+    return `Property '${item.name}' was changed from ${valueBefore} to ${valueAfter}`;
   },
 };
 

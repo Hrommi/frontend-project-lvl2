@@ -36,7 +36,7 @@ const genDiff = (before, after) => {
       name: key,
       type: 'changed',
       valueBefore,
-      value: valueAfter,
+      valueAfter,
     };
   });
 };
