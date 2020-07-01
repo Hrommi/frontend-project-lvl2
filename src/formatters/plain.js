@@ -21,20 +21,22 @@ const typesMapping = {
 };
 
 const flattenData = (data) => {
-  const iter = ({ children, ...item }, parentName) => {
+  const iter = (item, parentName) => {
     const name = parentName
       ? `${parentName}.${item.name}`
       : item.name;
-    if (children) {
-      return [
-        {
-          ...item,
-          name,
-        },
-        ...children.flatMap((child) => iter(child, name)),
-      ];
-    }
-    return { ...item, name };
+    const currentItem = {
+      ...item,
+      name,
+    };
+    const currentChildren = item.type === 'nested'
+      ? item.children.flatMap((child) => iter(child, name))
+      : [];
+
+    return [
+      currentItem,
+      ...currentChildren,
+    ];
   };
   return data.flatMap((item) => iter(item, ''));
 };
