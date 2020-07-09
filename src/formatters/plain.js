@@ -1,10 +1,10 @@
 import isObject from 'lodash/isPlainObject.js';
 
 const stringify = (value) => {
-  if (!isObject(value)) {
-    return typeof value === 'string' ? `'${value}'` : value;
+  if (isObject(value)) {
+    return '[complex value]';
   }
-  return '[complex value]';
+  return typeof value === 'string' ? `'${value}'` : value;
 };
 
 const genName = (name, parentName) => (
