@@ -18,7 +18,7 @@ const typesMapping = {
     const name = genName(item.name, parentName);
     return render(item.children, name, render);
   },
-  unchanged: () => '',
+  unchanged: () => null,
   added: (item, parentName) => {
     const name = genName(item.name, parentName);
     const value = stringify(item.value);
